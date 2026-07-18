@@ -1,0 +1,14 @@
+unsloth
+torch
+transformers
+peft
+trl
+accelerate
+bitsandbytes
+pandas
+tqdm
+jinja2
+tabulate
+numpy
+scikit-learn
+ipykernel
