@@ -2,7 +2,7 @@
 
 This repository contains the source code, data preprocessing pipelines, and evaluation scripts for our Natural Language Processing course project. We approach the Vietnamese Aspect-Based Sentiment Analysis (ABSA) task as a **Generative Sequence-to-Sequence** problem, fine-tuning the state-of-the-art **Qwen2.5-7B-Instruct** model using **QLoRA** on the **UIT-ViSD4SA** dataset.
 
-## 📌 Project Overview
+## Project Overview
 
 - **Objective**: Extract triplets of `(Aspect, Sentiment, Span)` from mobile phone reviews written in Vietnamese.
 - **Dataset**: `UIT-ViSD4SA` (11,122 reviews, split into 70% Train, 10% Dev, 20% Test). It contains 10 target aspects (e.g., `BATTERY`, `SCREEN`, `PERFORMANCE`, `CAMERA`, etc.) and 3 sentiment polarities (`POSITIVE`, `NEGATIVE`, `NEUTRAL`).
@@ -12,7 +12,7 @@ This repository contains the source code, data preprocessing pipelines, and eval
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 1. **Instruction Engineering & Data Preprocessing**:
    - Converts raw character-level span annotations into Alpaca-style instruction tuning prompts.
@@ -28,7 +28,7 @@ This repository contains the source code, data preprocessing pipelines, and eval
 
 ---
 
-## 📊 Experimental Results
+## Experimental Results
 
 We evaluated our model on three tasks: Aspect Extraction, Polarity Detection, and Strict Matching (which requires predicting both aspect and sentiment correctly).
 
@@ -42,42 +42,42 @@ Our generative approach outperforms the **XLM-RoBERTa Large** baseline from the 
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 ├── data_llm/             # Processed Alpaca-format instruction-tuning datasets
 ├── raw_data/             # Original UIT-ViSD4SA dataset splits (.jsonl)
+├── trained_model/        # Saved LoRA adapter weights after fine-tuning
 ├── docs/
 │   └── NLP_report.pdf    # Detailed research and project report (Vietnamese)
 ├── Preprocessing.ipynb   # Notebook for data preparation and Alpaca format conversion
 ├── Model.ipynb           # Notebook for QLoRA training and metrics calculation
-├── DEMO.ipynb            # Notebook for local inference/testing
+├── DEMO.ipynb            # Notebook for local inference and interactive testing
 ├── requirements.txt      # Required dependencies
 └── .gitattributes
 ```
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
-### 1. Install Dependencies
+### 1. Data
+The raw dataset (`raw_data/`) and preprocessed instruction-tuning data (`data_llm/`) are already included in this repository. No separate download is required.
+
+### 2. Install Dependencies
 Ensure you have Python 3.10+ and a GPU-enabled environment. Install the packages listed in `requirements.txt`:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Preprocessing
+### 3. Preprocessing
 Run the `Preprocessing.ipynb` notebook to transform the raw `.jsonl` files in `raw_data/` into structured Alpaca-style instruction records stored in `data_llm/`.
 
-### 3. Training & Evaluation
+### 4. Training & Evaluation
 Open `Model.ipynb` in Google Colab (or any GPU server):
 - Follow the notebook cells to install the `unsloth` framework.
 - Load the model, attach the LoRA adapters, and train.
 - Run the evaluation cell (`calculate_metrics_optimized`) to compute the final micro and macro F1 scores using our post-processing logic.
 
----
-
-## 📜 References
-
-- Nguyen et al., 2021. *UIT-ViSD4SA: A Vietnamese Dataset for Aspect-Based Sentiment Analysis*.
-- Unsloth AI library: [https://github.com/unslothai/unsloth](https://github.com/unslothai/unsloth)
+### 5. Inference Demo
+Open `DEMO.ipynb` to load the saved LoRA adapter from `trained_model/` and run interactive inference on custom Vietnamese review sentences without retraining.
